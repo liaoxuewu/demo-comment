@@ -10,15 +10,14 @@
       </div>
     </header>
     <div class="container">
-      <comment-add :add-comment="addComment"></comment-add>
-      <comment-list :comments="comments" :delete-comment="deleteComment"></comment-list>
+      <add :add-comment="addComment"></add>
+      <list :comments="comments" :delete-comment="deleteComment"></list>
     </div>
   </div>
 </template>
-
 <script>
-  import CommentAdd from './CommentAdd.vue'
-  import CommentList from './CommentList.vue'
+  import add from './add.vue'
+  import list from './list.vue'
 
   export default {
     data () {
@@ -26,38 +25,40 @@
         comments: []
       }
     },
-
     created () {
-      // 模拟从服务器动态异步获取
+      // 模拟发送ajax请求, 迅步获取数据
       setTimeout(() => {
-        this.comments = [
+        // 得到数据
+        const comments = [
           {
             username: 'Tom',
-            content: 'Vue还不错啊!',
-            id: Date.now()
+            content: 'Vue不错!'
           },
           {
-            username: 'JACK',
-            content: 'Vue相当给力!',
-            id: Date.now() + 1
+            username: '老班',
+            content: 'So easy!'
           }
         ]
+        // 更新数据
+        this.comments = comments
       }, 1000)
     },
-
-    components: {CommentAdd, CommentList},
 
     methods: {
       addComment (comment) {
         this.comments.unshift(comment)
       },
-      deleteComment (comment) {
-        var index = this.comments.indexOf(comment)
+      deleteComment (index) {
         this.comments.splice(index, 1)
       }
+    },
+
+    components: {
+      add,
+      list
     }
   }
 </script>
-
 <style>
+
 </style>
